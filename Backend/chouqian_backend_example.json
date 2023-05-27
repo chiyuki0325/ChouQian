@@ -1,0 +1,39 @@
+{
+  "chouqian": {
+    "students": [
+      ["001", "张三"],
+      ["002", "李四"],
+      ["003", "王五"]
+    ],
+    "special_config": {
+      "baodi": [
+        {
+          "number": "001",
+          "baodi_count": 30
+        }
+      ],
+      "replacements": [
+        {
+          "number": "001",
+          "key": "name",
+          "value_to": "法外狂徒",
+          "rate": 50
+        }
+      ]
+    },
+    "api_cooldown": 0
+  },
+  "api": {
+    "host": ":24140",
+    "mode": "release"
+  },
+  "qr": {
+    "preferred_prefix": "192.168.201.",
+    "blocked_prefixes": [
+      "127.0",
+      "10.",
+      "fe80::",
+      "192.168.153."
+    ]
+  }
+}

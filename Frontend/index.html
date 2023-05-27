@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>抽签控制台</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="title">幸运观众设置</div>
+<div id="student-list">
+</div>
+</body>
+<script>
+    (async () => {
+        const setNextStudent = (name, number, skipConfirm) => {
+            const isConfirmed = skipConfirm ? true : confirm(`是否将 ${name} 设置为幸运观众？`)
+            if (isConfirmed) {
+                const postData = {
+                    name: name,
+                    number: number
+                }
+                fetch('/student/next', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(postData)
+                }).then(async res => {
+                    response = await res.json()
+                    if (res.status === 200) {
+                        alert('幸运观众设置成功！')
+                    } else {
+                        alert(`幸运观众设置失败！\n还剩 ${Math.ceil(response['time_remaining'] / 60)} 分钟才能再次设置。`)
+                    }
+                })
+            }
+        }
+        const $ = selector => document.querySelector(selector)
+        const studentList = await fetch('/student/list').then(res => res.json())
+        const studentListElement = $('#student-list')
+        // 渲染学生列表
+        studentList['student_list'].forEach((student) => {
+            studentListElement.innerHTML += `<div class="student-item" id="student-${student[0]}">${student.join(' ')}</div>`
+        })
+        studentListElement.innerHTML += '<div class="student-item" id="manual-input">手动输入</div>'
+        // 绑定事件
+        for (const student of studentListElement.children) {
+            student.onclick = () => {
+                const arr = student.innerText.split(' ')
+                setNextStudent(arr[1], arr[0], false)
+            }
+        }
+        $('#manual-input').onclick = () => {
+            const name = prompt('请输入幸运观众姓名：')
+            if (name !== null) {
+                const number = prompt('请输入幸运观众学号：')
+                if (number !== null) {
+                    setNextStudent(name, number, true)
+                }
+            }
+        }
+    })()
+</script>
+</html>
