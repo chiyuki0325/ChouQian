@@ -20,3 +20,7 @@ func loadConfig() types.Config {
 	_ = json.Unmarshal(jsonData, &config)
 	return config
 }
+
+func Reconfigure() {
+	Config = loadConfig()
+}

@@ -14,6 +14,11 @@ var NextStudent types.Student = types.Student{}
 var BaoDi map[string]int = initBaoDi()
 var reader = rand.Reader
 
+func Reconfigure() {
+	StudentList = initStudentList()
+	BaoDi = initBaoDi()
+}
+
 func initStudentList() []types.Student {
 	var studentList []types.Student
 	for _, student := range config.Config.ChouQian.Students {

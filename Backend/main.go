@@ -19,6 +19,7 @@ func initRouter() *gin.Engine {
 	qrRouter := router.Group("/qr")
 	qrRouter.GET("/image", handlers.QrImage)
 	qrRouter.GET("/url", handlers.QrUrl)
+	router.GET("/reconfigure", handlers.Reconfigure)
 	router.Static("/frontend", frontendPath)
 	router.StaticFile("/favicon.ico", frontendPath+"/favicon.ico")
 	return router
