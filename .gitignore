@@ -3,7 +3,14 @@ Client/ChouQian3.csi
 Client/ChouQian3.lvw
 Client/ChouQian3.vbw
 Client/MMMPack.mmmp
+Client/MMMPack/
 Client/MSSCCPRJ.SCC
+Configure/ChouQianConfig.csi
+Configure/MSSCCPRJ.SCC
+Configure/ChouQianConfig.lvw
+Configure/ChouQianConfig.vbw
+Configure/MMMPack.mmmp
+Configure/MMMPack/
 # Client/JSON.bas
 # Client/cStringBuilder.cls
 .idea/
