@@ -16,7 +16,7 @@
 
 ![](https://imgsrc.baidu.com/forum/pic/item/9358d109b3de9c8208d945422981800a18d843bb.jpg)
 
-除了这些功能之外，把窗口的底边向下拉，可以看见一个隐藏按钮，点击按钮，就可以用手机扫码设置幸运观众。
+除了这些功能之外，把窗口的底边向下拉，长按学号就可以看见一个隐藏按钮，点击按钮，就可以用手机扫码设置幸运观众。
 
 ![](https://imgsrc.baidu.com/forum/pic/item/ac345982b2b7d0a2ae73b8508eef76094a369a41.jpg)
 
@@ -55,3 +55,9 @@ GOOS=windows go build -o ChouQianBackend.exe
 部分库来源于网络，其中 `JSON.bas` 和 `cStringBuilder.cls` 在 [此处](https://www.ediy.co.nz/vbjson-json-parser-library-in-vb6-xidc55680.html) 发布，`stdPicEx2.cls` 在 [此处](https://www.vbforums.com/showthread.php?860333-vb6-Enhancing-VB-s-StdPicture-Object-to-Support-GDI&p=5272035#post5272035) 发布。
 
 编译时可以使用 [Make-My-Manifest](https://github.com/froque/Make-My-Manifest) 附加 manifest 以启用现代控件和高 DPI 支持。
+
+在 `config.json` 中更改 `BackgroundPath` 项可以更改抽签签筒的图片。需要是白色背景。
+
+### 🔧 配置工具
+
+配置工具位于 `Configure` 文件夹中，可以图形化更改后端的配置。
