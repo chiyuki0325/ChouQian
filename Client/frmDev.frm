@@ -83,19 +83,19 @@ Dim PicLoader As New stdPicEx2
 Private Sub Form_Load()
     With New WinHttpRequest
         .Open Method:="GET", _
-              Url:="http://" & Config.Config.Host & "/qr/url", _
+              Url:="http://" + Config.Config!Host + "/qr/url", _
               Async:=True
         .Send
         .WaitForResponse
         Dim FrontendUrl$: FrontendUrl = JSON.parse(.ResponseText).item("url")
         With LabelUrl
-            .Caption = "或在浏览器中打开 " & FrontendUrl
+            .Caption = "或在浏览器中打开 " + FrontendUrl
             .Tag = FrontendUrl
         End With
     End With
     With New WinHttpRequest
         .Open Method:="GET", _
-              Url:="http://" & Config.Config.Host & "/qr/image", _
+              Url:="http://" + Config.Config!Host + "/qr/image", _
               Async:=True
         .Send
         .WaitForResponse

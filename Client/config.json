@@ -1,1 +1,6 @@
-{"host":"localhost:24140"}
+{
+	"Host": "localhost:24140",
+	"BackendPath": "Backend\\ChouQianBackend.exe",
+	"FrontendPath": "Frontend",
+	"BackgroundPath": "Assets\\ChouQian.png"
+}

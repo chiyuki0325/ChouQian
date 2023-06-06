@@ -2,14 +2,14 @@ VERSION 5.00
 Begin VB.Form frmMain 
    BackColor       =   &H80000005&
    Caption         =   "³éÇ©"
-   ClientHeight    =   2610
+   ClientHeight    =   2655
    ClientLeft      =   6090
    ClientTop       =   3375
    ClientWidth     =   4005
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   2610
+   ScaleHeight     =   2655
    ScaleWidth      =   4005
    Begin VB.CommandButton btnDev 
       Caption         =   "DEV"
@@ -23,9 +23,10 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       Height          =   360
-      Left            =   1500
+      Left            =   1440
       TabIndex        =   2
-      Top             =   2940
+      Top             =   4380
+      Visible         =   0   'False
       Width           =   990
    End
    Begin VB.Label lblNumber 
@@ -34,7 +35,7 @@ Begin VB.Form frmMain
       Caption         =   "Ñ§ºÅ"
       BeginProperty Font 
          Name            =   "Î¢ÈíÑÅºÚ"
-         Size            =   18
+         Size            =   21.75
          Charset         =   134
          Weight          =   400
          Underline       =   0   'False
@@ -42,10 +43,10 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       Height          =   795
-      Left            =   570
+      Left            =   30
       TabIndex        =   1
-      Top             =   1410
-      Width           =   2775
+      Top             =   1500
+      Width           =   3915
    End
    Begin VB.Label lblName 
       Alignment       =   2  'Center
@@ -53,7 +54,7 @@ Begin VB.Form frmMain
       Caption         =   "ÐÕÃû"
       BeginProperty Font 
          Name            =   "Î¢ÈíÑÅºÚ"
-         Size            =   24
+         Size            =   26.25
          Charset         =   134
          Weight          =   400
          Underline       =   0   'False
@@ -61,10 +62,10 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       Height          =   795
-      Left            =   600
+      Left            =   60
       TabIndex        =   0
-      Top             =   390
-      Width           =   2775
+      Top             =   360
+      Width           =   3915
    End
 End
 Attribute VB_Name = "frmMain"
@@ -90,20 +91,26 @@ Sub ShowWindow()
     '»ñÈ¡Ëæ»úÑ§Éú
     With New WinHttpRequest
         .Open Method:="GET", _
-              Url:="http://" & Config.Config.Host & "/student/random", _
+              Url:="http://" + Config.Config!Host + "/student/random", _
               Async:=True
         .Send
         .WaitForResponse
         Dim Student As Dictionary
         Set Student = JSON.parse(.ResponseText)
-        lblName = Student.item("name")
-        lblNumber = Student.item("number")
+        lblName = Student("name")
+        lblNumber = Student("number")
     End With
     Me.Show
 End Sub
 
 Private Sub btnDev_Click()
     frmDev.Show
+End Sub
+
+Private Sub lblNumber_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Button = 2 Then
+        btnDev.Visible = True
+    End If
 End Sub
 
 'FOLDED: Private Sub Form_Click ()
@@ -143,16 +150,5 @@ End Sub
 '\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 '--- If you're Subclassing: Move the CODEFOLD STORAGE up as needed ---
 '/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-
-
-
-
-
-
-
-
-
-
-
 
 
