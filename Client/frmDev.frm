@@ -78,16 +78,16 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim PicLoader As New stdPicEx2
 
 Private Sub Form_Load()
+    Dim StdPictureEx As New stdPicEx2, JSON As New cJSON
     With New WinHttpRequest
         .Open Method:="GET", _
-              Url:="http://" + Config.Config!Host + "/qr/url", _
+              Url:="http://" + Config.Config!Host + "/api/qr/url", _
               Async:=True
         .Send
         .WaitForResponse
-        Dim FrontendUrl$: FrontendUrl = JSON.parse(.ResponseText).item("url")
+        Dim FrontendUrl$: FrontendUrl = JSON.parse(.ResponseText)("url")
         With LabelUrl
             .Caption = "或在浏览器中打开 " + FrontendUrl
             .Tag = FrontendUrl
@@ -95,11 +95,11 @@ Private Sub Form_Load()
     End With
     With New WinHttpRequest
         .Open Method:="GET", _
-              Url:="http://" + Config.Config!Host + "/qr/image", _
+              Url:="http://" + Config.Config!Host + "/api/qr/image", _
               Async:=True
         .Send
         .WaitForResponse
-        ImageQR.Picture = PicLoader.LoadPictureEx(.ResponseBody)
+        ImageQR.Picture = StdPictureEx.LoadPictureEx(.ResponseBody)
     End With
 End Sub
 

@@ -2,17 +2,17 @@ VERSION 5.00
 Begin VB.Form frmMain 
    BackColor       =   &H80000005&
    Caption         =   "³éÇ©"
-   ClientHeight    =   2655
+   ClientHeight    =   2955
    ClientLeft      =   6090
    ClientTop       =   3375
    ClientWidth     =   4005
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   ScaleHeight     =   2655
+   ScaleHeight     =   2955
    ScaleWidth      =   4005
    Begin VB.CommandButton btnDev 
-      Caption         =   "DEV"
+      Caption         =   "ºÚÄ»"
       BeginProperty Font 
          Name            =   "Î¢ÈíÑÅºÚ"
          Size            =   9
@@ -26,8 +26,27 @@ Begin VB.Form frmMain
       Left            =   1440
       TabIndex        =   2
       Top             =   4380
-      Visible         =   0   'False
       Width           =   990
+   End
+   Begin VB.Label lblVersion 
+      Alignment       =   2  'Center
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Label1"
+      BeginProperty Font 
+         Name            =   "Î¢ÈíÑÅºÚ"
+         Size            =   9
+         Charset         =   134
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   225
+      Left            =   1680
+      TabIndex        =   3
+      Top             =   4920
+      Width           =   510
    End
    Begin VB.Label lblNumber 
       Alignment       =   2  'Center
@@ -45,7 +64,7 @@ Begin VB.Form frmMain
       Height          =   795
       Left            =   30
       TabIndex        =   1
-      Top             =   1500
+      Top             =   1560
       Width           =   3915
    End
    Begin VB.Label lblName 
@@ -54,14 +73,14 @@ Begin VB.Form frmMain
       Caption         =   "ÐÕÃû"
       BeginProperty Font 
          Name            =   "Î¢ÈíÑÅºÚ"
-         Size            =   26.25
+         Size            =   32.25
          Charset         =   134
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   795
+      Height          =   975
       Left            =   60
       TabIndex        =   0
       Top             =   360
@@ -76,6 +95,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Sub ShowWindow()
+    Dim JSON As New cJSON
     'ÖÃ¶¥´°¿Ú
     Call APIs.SetWindowPos( _
         hWnd:=Me.hWnd, _
@@ -91,7 +111,7 @@ Sub ShowWindow()
     '»ñÈ¡Ëæ»úÑ§Éú
     With New WinHttpRequest
         .Open Method:="GET", _
-              Url:="http://" + Config.Config!Host + "/student/random", _
+              Url:="http://" + Config.Config!Host + "/api/student/random", _
               Async:=True
         .Send
         .WaitForResponse
@@ -107,10 +127,17 @@ Private Sub btnDev_Click()
     frmDev.Show
 End Sub
 
-Private Sub lblNumber_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    If Button = 2 Then
-        btnDev.Visible = True
-    End If
+Private Sub Form_Load()
+    Dim JSON As New cJSON
+    '¼ÓÔØ°æ±¾ºÅ
+    With New WinHttpRequest
+        .Open Method:="GET", _
+              Url:="http://" + Config.Config!Host + "/api/version", _
+              Async:=True
+        .Send
+        .WaitForResponse
+        lblVersion = JSON.parse(.ResponseText)("version")
+    End With
 End Sub
 
 'FOLDED: Private Sub Form_Click ()

@@ -31,7 +31,8 @@ Private IsDragging As Boolean
 Private DragStartX!, DragStartY!, DragStartTop!, DragStartLeft!
 
 Private Sub Form_Load()
-    Dim FSO As New FileSystemObject, PicLoader As New stdPicEx2, BG As StdPicture
+    Dim StdPictureEx As New stdPicEx2
+    Dim FSO As New FileSystemObject, BG As StdPicture
     
     '≈‰÷√Œƒº˛
     Config.LoadConfig
@@ -47,7 +48,7 @@ Private Sub Form_Load()
     )
     
     'º”‘ÿÕº∆¨
-    Image1.Picture = PicLoader.LoadPictureEx(App.Path + "\" + Config.Config!BackgroundPath)
+    Image1.Picture = StdPictureEx.LoadPictureEx(App.Path + "\" + Config.Config!BackgroundPath)
     Me.Height = Image1.Height
     Me.Width = Image1.Width
     
