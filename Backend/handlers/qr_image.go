@@ -22,7 +22,7 @@ func QrImage(context *gin.Context) {
 }
 
 func getFrontendUrl() string {
-	return "http://" + getCurrentIpAddress() + ":" + strings.Split(config.Config.Api.Host, ":")[1] + "/frontend"
+	return "http://" + getCurrentIpAddress() + ":" + strings.Split(config.Config.Api.Host, ":")[1] + "/"
 }
 
 func getCurrentIpAddress() string {

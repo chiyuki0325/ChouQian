@@ -14,6 +14,7 @@ type ChouQianConfig struct {
 	Students      [][]string    `json:"students"`
 	SpecialConfig SpecialConfig `json:"special_config"`
 	ApiCooldown   int           `json:"api_cooldown"`
+	RandomMode    string        `json:"random_mode"`
 }
 
 // .api

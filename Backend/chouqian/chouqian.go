@@ -3,16 +3,16 @@ package chouqian
 import (
 	"Backend/config"
 	"Backend/types"
-	"crypto/rand"
+	cryptoRand "crypto/rand"
 	"math/big"
-	fakeRand "math/rand"
+	"math/rand"
 	"time"
 )
 
 var StudentList []types.Student = initStudentList()
 var NextStudent types.Student = types.Student{}
 var BaoDi map[string]int = initBaoDi()
-var reader = rand.Reader
+var reader = cryptoRand.Reader
 
 func Reconfigure() {
 	StudentList = initStudentList()
@@ -27,8 +27,7 @@ func initStudentList() []types.Student {
 			Number: student[0],
 		})
 	}
-	fakeRand.Seed(time.Now().UnixNano())
-	fakeRand.Shuffle(len(studentList), func(i, j int) {
+	rand.New(rand.NewSource(time.Now().UnixNano())).Shuffle(len(studentList), func(i, j int) {
 		studentList[i], studentList[j] = studentList[j], studentList[i]
 	})
 	return studentList
@@ -75,9 +74,15 @@ func GetRandomStudent() types.Student {
 		}
 	}
 	// 否则就从 StudentList 中随机抽取一个学生
-	index, _ := rand.Int(reader, new(big.Int).SetInt64(int64(len(StudentList))))
-	student := StudentList[index.Int64()]
-	StudentList = removeStudent(StudentList, int(index.Int64()))
+	var index int
+	if config.Config.ChouQian.RandomMode == "math" {
+		index = rand.New(rand.NewSource(time.Now().UnixNano())).Intn(len(StudentList))
+	} else {
+		index64, _ := cryptoRand.Int(reader, new(big.Int).SetInt64(int64(len(StudentList))))
+		index = int(index64.Int64())
+	}
+	student := StudentList[index]
+	StudentList = removeStudent(StudentList, index)
 	if len(StudentList) == 0 {
 		StudentList = initStudentList()
 	}
@@ -92,7 +97,7 @@ func GetRandomStudent() types.Student {
 	for _, replacement := range replacementConfig {
 		if student.Number == replacement.Number {
 			// 触发替代
-			randRate, _ := rand.Int(reader, new(big.Int).SetInt64(100))
+			randRate, _ := cryptoRand.Int(reader, new(big.Int).SetInt64(100))
 			if randRate.Int64() <= int64(replacement.Rate) {
 				switch replacement.Key {
 				case "number":

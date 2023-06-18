@@ -21,7 +21,8 @@
         }
       ]
     },
-    "api_cooldown": 0
+    "api_cooldown": 0,
+    "random_mode": "math"
   },
   "api": {
     "host": ":24140",
