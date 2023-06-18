@@ -20,7 +20,7 @@
                     name: name,
                     number: number
                 }
-                fetch('/student/next', {
+                fetch('/api/student/next', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -37,7 +37,7 @@
             }
         }
         const $ = selector => document.querySelector(selector)
-        const studentList = await fetch('/student/list').then(res => res.json())
+        const studentList = await fetch('/api/student/list').then(res => res.json())
         const studentListElement = $('#student-list')
         // 渲染学生列表
         studentList['student_list'].forEach((student) => {
