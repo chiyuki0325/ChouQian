@@ -7,7 +7,7 @@ func Version(context *gin.Context) {
 		200,
 		gin.H{
 			"code":    200,
-			"version": "3.3.0",
+			"version": "3.3.5",
 		},
 	)
 }

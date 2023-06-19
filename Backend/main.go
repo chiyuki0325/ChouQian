@@ -4,7 +4,6 @@ import (
 	"Backend/config"
 	"Backend/handlers"
 	"Backend/utils"
-	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"os"
 )
@@ -12,16 +11,18 @@ import (
 func initRouter() *gin.Engine {
 	frontendPath := os.Args[1]
 	router := gin.Default()
-	router.Use(static.Serve("/", static.LocalFile(frontendPath, false)))
-	studentRouter := router.Group("/api/student")
+	apiRouter := router.Group("/api")
+	studentRouter := apiRouter.Group("/student")
 	studentRouter.GET("/random", handlers.GetRandomStudent)
 	studentRouter.POST("/next", handlers.SetNextStudent)
 	studentRouter.GET("/list", handlers.GetStudentList)
-	qrRouter := router.Group("/api/qr")
+	qrRouter := apiRouter.Group("/qr")
 	qrRouter.GET("/image", handlers.QrImage)
 	qrRouter.GET("/url", handlers.QrUrl)
-	router.GET("/api/reconfigure", handlers.Reconfigure)
-	router.GET("/api/version", handlers.Version)
+	apiRouter.GET("/reconfigure", handlers.Reconfigure)
+	apiRouter.GET("/version", handlers.Version)
+	router.Static("/ui", frontendPath)
+	router.Static("/favicon.ico", frontendPath+"/favicon.ico")
 	return router
 }
 
